@@ -7,7 +7,7 @@ import java.util.Map;
  * 
  * Codility test. A variant of this question is one of the stock questions in the Codility test suite.
  * 
- * @author Saqib Malik
+ * @author Saqib Malik (2018)
  *
  */
 
@@ -84,7 +84,6 @@ public class PhoneBill {
 		
 		for (Map.Entry<String, Integer> entry : phoneNumberDetails.entrySet())
 		{
-			
 			if (entry.getKey().equals(maxPhoneNumber)) continue;
 			
 			if (entry.getValue() > 300) {
