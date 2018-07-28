@@ -4,6 +4,8 @@ import static java.lang.System.*;
 
 import java.util.Arrays;
 
+import org.springframework.stereotype.Component;
+
 /**
  * You are an avid rock collector who lives in southern California. Some rare and desirable rocks just became
  * available in New York, so you are planning a cross-country road trip. There are several other rare rocks that you
@@ -27,6 +29,7 @@ import java.util.Arrays;
  *
  */
 
+@Component
 public class OptimalPath {
 	
 	int total = 0;
@@ -47,6 +50,7 @@ public class OptimalPath {
 	 * @return An int givng the total number of rocks that can be collected along the optimal path as per the rules specified above.
 	 */
 	public int calculateOptimalPath(int[][] grid) {
+			if (grid == null || grid.length == 0) throw new IllegalArgumentException("grid cannot be empty");
 			total = grid[grid.length - 1][0];
 			if (grid.length == 1 && grid[0].length == 1) {
 				return total;
