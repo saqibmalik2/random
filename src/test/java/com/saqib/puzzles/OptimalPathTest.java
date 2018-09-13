@@ -29,7 +29,7 @@ public class OptimalPathTest {
 	}
 	
 	@Test
-	public void testOptimalPath() {
+	public void testOptimalPathExpectTen() {
 		int[][] intialGrid = { {0,0,0,0,5}, 
 				   {0,1,1,1,0},
 				   {2,0,0,0,0}
@@ -37,6 +37,22 @@ public class OptimalPathTest {
 		assertEquals(10,optimalPath.calculateOptimalPath(intialGrid));
 	}
 	
+	@Test
+	public void testOptimalPathExpectAThousand() {
+		int[][] intialGrid = { {995,0,0,0,5}, 
+				   {0,1,1,1,0},
+				   {0,0,0,0,0}
+				 };
+		assertEquals(1000,optimalPath.calculateOptimalPath(intialGrid));
+	}
 	
+	@Test
+	public void testOptimalPathExpectTwoHundred() {
+		int[][] intialGrid = { {40,0,94,0,5}, 
+				   {0,100,1,1,0},
+				   {0,0,0,0,0}
+				 };
+		assertEquals(200,optimalPath.calculateOptimalPath(intialGrid));
+	}
 
 }
