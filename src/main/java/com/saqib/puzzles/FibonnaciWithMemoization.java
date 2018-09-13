@@ -16,7 +16,7 @@ public class FibonnaciWithMemoization {
 		   return fibArray[(int)n];
 		 }
 		 else{
-			 fibValue=fibonacci(n-1)+fibonacci(n-2);
+		     fibValue=fibonacci(n-1)+fibonacci(n-2);
 		     fibArray[(int) n]=fibValue;
 		     return fibValue;
 		 }
