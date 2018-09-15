@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 
- * Codility test. A variant of this question is one of the stock questions in the Codility test suite.
+ * Codility test. This question, or some variant thereof, is one of the stock questions in the Codility test suite.
  * 
  *  Given a phone calls log in the form of a string with each record separated by \n (ascii code 10) calculate the total phone bill.
  *  Each record is correctly formed as "HH:MM:SS,nnn-nnn-nnn" e.g. "00:01:07,400-234-090" refers to a phone call to phone number 
