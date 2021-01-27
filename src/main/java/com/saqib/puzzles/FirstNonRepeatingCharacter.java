@@ -1,5 +1,6 @@
 package com.saqib.puzzles;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +13,11 @@ import java.util.Set;
 public class FirstNonRepeatingCharacter {
 
 	public static void main(String[] args) {
-		System.out.println(new FirstNonRepeatingCharacter().firstNonRepeatingCharacter("apple"));
+		System.out.println(new FirstNonRepeatingCharacter().firstNonRepeatingCharacter("racecars"));
+		System.out.println(new FirstNonRepeatingCharacter().firstNonRepeatingCharacterOptimised("racecars"));
 	}
 	
+	// O(n^2) - not an optimal solution
 	public Character firstNonRepeatingCharacter(String inputString) {
 		Set<Character> repeatedCharacters = new HashSet<>();
 		char[] characters = inputString.toCharArray();
@@ -34,5 +37,27 @@ public class FirstNonRepeatingCharacter {
 		}
 		return null;
 	}
+	
+	// O(n) 
+	public Character firstNonRepeatingCharacterOptimised(String inputString) {
+		HashMap<Character,Integer> scoreboard = new HashMap<>();
+		
+        for (int i = 0; i < inputString.length(); i++) {
+            char c = inputString.charAt(i);
+            if (scoreboard.containsKey(c)) {
+                scoreboard.put(c, scoreboard.get(c) + 1);
+            } else {
+                scoreboard.put(c, 1);
+            }
+        }
+        // since HashMap doesn't maintain order, going through string again
+        for (int i = 0; i < inputString.length(); i++) {
+            char c = inputString.charAt(i);
+            if (scoreboard.get(c) == 1) {
+                return c;
+            }
+        }
+        return null;
+    }
 
 }
