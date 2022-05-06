@@ -24,7 +24,7 @@ public class FirstNonRepeatingCharacter {
 		
 		for (int i=0;i<characters.length;i++) {
 			boolean foundCharacter = true;
-			if (repeatedCharacters.contains(new Character(characters[i]))) continue;
+			if (repeatedCharacters.contains(Character.valueOf(characters[i]))) continue;
 			for (int j=0;j<characters.length;j++) {
 				if (j==i) continue;
 				if (characters[i] == characters[j]) {
