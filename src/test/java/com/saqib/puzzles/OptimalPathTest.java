@@ -1,31 +1,28 @@
 package com.saqib.puzzles;
 
-import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.saqib.puzzles.utils.TestConfig;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class OptimalPathTest {
 	
 	@Autowired
 	OptimalPath optimalPath;
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testOptimalPathWithNullGrid() {
-		optimalPath.calculateOptimalPath(null);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testOptimalPathWithEmptyGrid() {
 		int[][] intialGrid = {};
-		optimalPath.calculateOptimalPath(intialGrid);
+		assertThrows(IllegalArgumentException.class, () -> optimalPath.calculateOptimalPath(intialGrid));
 	}
 	
 	@Test
