@@ -51,11 +51,11 @@ public class MaximalElementGeneric {
 		return findMaximalElement(inputList, begin, end);
 	}
 	
-	public <T extends Object & Comparable<? super T>> T findMaximalElement(List<? extends T> inputList, int begin, int end) {
-		T maxElement = inputList.get(begin);
+	public <T extends Object & Comparable<? super T>> T findMaximalElement(List<? extends T> inputList, int startPosition, int endPosition) {
+		T maxElement = inputList.get(startPosition);
 		
-		for (++begin; begin <= end; begin++) {
-			if (inputList.get(begin).compareTo(maxElement) > 0) maxElement = inputList.get(begin);
+		for (++startPosition; startPosition <= endPosition; startPosition++) {
+			if (inputList.get(startPosition).compareTo(maxElement) > 0) maxElement = inputList.get(startPosition);
 		}
 		
 		return maxElement;

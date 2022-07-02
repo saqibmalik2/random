@@ -52,16 +52,24 @@ public class OptimalPath {
 	 */
 	public int calculateOptimalPath(int[][] grid) {
 			if (grid == null || grid.length == 0) throw new IllegalArgumentException("grid cannot be empty");
+			
+			//the starting total is the value of the first position (bottom left)
 			total = grid[grid.length - 1][0];
+			
+			//if we have only entry in the matrix then its value is the total
 			if (grid.length == 1 && grid[0].length == 1) {
 				return total;
 			}
+			
+			//if we only have one array then we can't move up and so the total will be the total of this array
 			if (grid.length == 1) {
 				int[] newIntArray;
 				newIntArray = Arrays.copyOfRange(grid[0], 1, grid[0].length);
 				int [][] newGrid = {newIntArray};
 				return total += calculateOptimalPath(newGrid);
 			}
+			
+			//if the length of the top row is one then we can total up the one value in each of the arrays 
 			if (grid[0].length == 1) {
 				int [][] newGrid = new int[1][1];
 				newGrid[0][0] = grid[0][0];
