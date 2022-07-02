@@ -1,9 +1,7 @@
 package com.saqib.puzzles;
 
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Stack;
-import java.util.stream.Stream;
 
 /**
  * 
