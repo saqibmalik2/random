@@ -54,7 +54,7 @@ public class BalancingBrackets {
 					if (characterPairs.get(c) != lastCharacter) {
 						return false;
 					}
-					// if we get here then all the brackets matched up correctly
+					// if this returns true then all the brackets matched up correctly
 					return inputStack.isEmpty();
 				}
 			}
