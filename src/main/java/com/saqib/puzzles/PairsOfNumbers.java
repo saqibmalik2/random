@@ -5,15 +5,12 @@ import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-
+/**
+ * Given an input array of integers and an input integer, k, find the number of 
+ * distinct pairs of integers in the array that add up to k.
+ * 
+ */
 public class PairsOfNumbers {
-	
-	/**
-	 * Given an input array of integers and an input integer, k, find the number of 
-	 * distinct pairs of integers in the array that add up to k.
-	 * 
-	 */
-	
 	
 	public int numberOfPairsNaive(int[] inputArray, int total) {
 		if (inputArray.length == 0) return 0;
