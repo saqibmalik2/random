@@ -14,9 +14,6 @@ public class PairsOfNumbers {
 	 * 
 	 */
 	
-	//private static final int [] inputArray = {3,3,3,3,2,3,3,3,4,3,3};
-	//private static final int [] TEST_ARRAY = {3,5,2,-4,8,11};
-	//private static final int total = 6;
 	
 	public int numberOfPairsNaive(int[] inputArray, int total) {
 		if (inputArray.length == 0) return 0;
