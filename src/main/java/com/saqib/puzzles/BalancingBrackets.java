@@ -21,7 +21,7 @@ import java.util.Stack;
 public class BalancingBrackets {
 
 	public static void main(String args[]) {
-		System.out.println(new BalancingBrackets().isValid("[]{}()(())"));
+		System.out.println(new BalancingBrackets().isValid("[]{}(){}{{}[[}(())"));
 	}
 	
 	public boolean isValid(String input) {
@@ -36,30 +36,24 @@ public class BalancingBrackets {
 		characterPairs.put('}', '{');
 		
 		for (Character c: input.toCharArray()) {
-			
 			//if we encounter an open bracket add it to the stack
 			if (c.equals('{') || c.equals('[') || c.equals('(')) {
 				inputStack.add(c);
 			}
 			// if a closing bracket then don't add but check what previous character was
 			else {
-				// will only occur if we start with a closing bracket
-				if (inputStack.isEmpty()) {
+				//we've popped all previous open brackets off so we shouldn't be encountering a closing bracket
+				if (inputStack.isEmpty()) return false;
+				//take the last character off the stack
+				var lastCharacter = inputStack.pop();
+				// is it the corresponding opening bracket?
+				if (characterPairs.get(c) != lastCharacter) {
 					return false;
-				}
-				else {
-					//take the last character off the stack
-					var lastCharacter = inputStack.pop();
-					// is it the corresponding opening bracket?
-					if (characterPairs.get(c) != lastCharacter) {
-						return false;
-					}
-					// if this returns true then all the brackets matched up correctly
-					return inputStack.isEmpty();
 				}
 			}
 		}
-		return true;
+		// if this returns true then all the brackets matched up correctly
+		return inputStack.isEmpty();
 	}
 	
 }
