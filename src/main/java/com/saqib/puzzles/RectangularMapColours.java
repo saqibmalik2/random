@@ -17,7 +17,7 @@ package com.saqib.puzzles;
  * Given an array write a function that return number of different countries on
  * the map.
  * 
- * @author Saqib Maliks
+ * @author Saqib Malik
  *
  */
 
