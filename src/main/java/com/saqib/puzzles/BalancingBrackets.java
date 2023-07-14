@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * 
  * @author Saqib Malik
- * @since  July 2023
+ * @since  July 2022
  * 
  * Check if a string has balanced brackets.
  * 
