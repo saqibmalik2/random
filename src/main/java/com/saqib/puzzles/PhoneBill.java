@@ -16,7 +16,7 @@ import java.util.Map;
  *		        charged as a 6 minute call i.e. 6 * 150 = 900 cents
  *		   (iii) All calls to the phone number with the longest total call duration are free. In the event that two phone numbers have the same total call duration use the one
  * 
- * @author Saqib Malik (2018)
+ * @author Saqib Malik (2019)
  *
  */
 
