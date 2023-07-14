@@ -2,8 +2,9 @@ package com.saqib.scribbles;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.Date;
 
 
 /**
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 public class MaximalElementGeneric {
 
 	public static void main(String[] args) {
+		
 		ArrayList<String> listOfString = new ArrayList<String>();
 		listOfString.add("Ziyad");
 		listOfString.add("Nazneen");

@@ -21,7 +21,8 @@ import java.util.Stack;
 public class BalancingBrackets {
 
 	public static void main(String args[]) {
-		System.out.println(new BalancingBrackets().isValid("[]{}(){}{{}[[}(())"));
+		System.out.println(new BalancingBrackets().isValid("([]{}(){}{{}}[[{}]](())")); // should be false
+		System.out.println(new BalancingBrackets().isValid("([]{}(){}{{}}[[{}]](()))")); // should be true
 	}
 	
 	public boolean isValid(String input) {
@@ -44,10 +45,8 @@ public class BalancingBrackets {
 			else {
 				//we've popped all previous open brackets off so we shouldn't be encountering a closing bracket
 				if (inputStack.isEmpty()) return false;
-				//take the last character off the stack
-				var lastCharacter = inputStack.pop();
-				// is it the corresponding opening bracket?
-				if (characterPairs.get(c) != lastCharacter) {
+				// is the top of the stack the corresponding opening bracket?
+				if (!characterPairs.get(c).equals(inputStack.pop())) {
 					return false;
 				}
 			}

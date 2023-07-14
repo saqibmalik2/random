@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * Find the first non-repeating character in a string. E.g. given "racecars" it would be 'e'.
+ * Returns null if no such character.
  * @author Saqib Malik
  *
  */
