@@ -72,14 +72,19 @@ public class MaxUniqueSubArrays {
     	   deque.add(nextValue);
     	   countForEntries.merge(nextValue, 1, Integer::sum);
     	   
+    	   //if the count has been reduced to 0 then its no longer part of the current set to remove it
     	   if (countForEntries.get(head) == 0) countForEntries.remove(head);
     	   
+    	   // the number of unique numbers in the current set is given by the size of the hashmap
+    	   // remember if we have the same number twice it still only has ONE key entry in the hashmap
     	   currentUniqueCount = countForEntries.size();
+    	   // do we have a greater number of unique numbers in this set than any of the previous ones?
     	   maxUniqueCount = Math.max(currentUniqueCount, maxUniqueCount);  
     	   
        }
        
        in.close();
+       
        return maxUniqueCount;
 	}
 
