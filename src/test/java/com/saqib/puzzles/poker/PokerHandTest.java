@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.saqib.puzzles.poker.Card;
-import com.saqib.puzzles.poker.Hand;
-import com.saqib.puzzles.poker.PokerHand;
-import com.saqib.puzzles.poker.Suit;
+/** 
+ * Test cases for the various Poker Hands. Please see the PokerPuzzle.png image for a description of the puzzle.
+ * 
+ */
 
 public class PokerHandTest {
 	

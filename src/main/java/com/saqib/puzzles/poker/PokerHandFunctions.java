@@ -89,6 +89,7 @@ public class PokerHandFunctions {
 	
 	public List<Function<List<Card>, Hand>> getHandEvaluationStrategies(){
 		List<Function<List<Card>, Hand>> handEvaluationStrategies = new ArrayList<>();
+		// insertion order matters here. start with the highest hand and proceed in order downwards.
 		handEvaluationStrategies.add(isRoyalFlush);
 		handEvaluationStrategies.add(isStraightFlush);
 		handEvaluationStrategies.add(isFourOfAKind);
