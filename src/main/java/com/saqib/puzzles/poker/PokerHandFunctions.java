@@ -81,7 +81,6 @@ public class PokerHandFunctions {
 		HashMap<Integer, Integer> cardsMap= new HashMap<>();
 		hand.stream().forEach(card -> cardsMap.merge(card.getValue(), 1, Integer::sum));
 		long returnValue = cardsMap.values().stream().filter(v -> v==2).count();
-		System.out.println(returnValue);
 		return returnValue;
 	}
 	
