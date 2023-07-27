@@ -199,6 +199,9 @@ public class PokerHandTest {
 		Hand highestHand = new PokerHand().getHighestHand(deal);
 		
 		assertTrue(highestHand == Hand.THREEOFAKIND);
+		// some negative test cases
+		assertTrue(highestHand != Hand.TWOPAIR);
+		assertTrue(highestHand != Hand.FOUROFAKIND);
 	}
 
 }
