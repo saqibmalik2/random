@@ -32,6 +32,7 @@ public class MaxUniqueSubArrays {
 		System.out.println(new MaxUniqueSubArrays().maxUniqueNumbers(args));
 	}
 	
+	@SuppressWarnings("resource")
 	private int maxUniqueNumbers(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt(); // retrieve the number of entries in the array

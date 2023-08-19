@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * 
- * NOTE: This solution works and is accepted by LeetCode but isn't the optimal one.
+ * NOTE: This solution works and is accepted by LeetCode but isn't (quite) the optimal one.
  * 
  */
 
