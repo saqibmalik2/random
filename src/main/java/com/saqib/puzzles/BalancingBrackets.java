@@ -26,9 +26,9 @@ public class BalancingBrackets {
 	}
 	
 	public boolean isValid(String input) {
+		
 		//number of characters can't be odd
 		if (input.length() % 2 != 0) return false;
-		
 		
 		Stack<Character> inputStack = new Stack<>();
 		HashMap<Character, Character> characterPairs = new HashMap<>();
