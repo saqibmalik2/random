@@ -51,7 +51,8 @@ public class FirstNonRepeatingCharacter {
                 scoreboard.put(c, 1);
             }
         }
-        // since HashMap doesn't maintain order, going through string again
+        // since HashMap doesn't maintain order, going through string again 
+        // and return the first character that has a score of 1 (i.e. none repeating)
         for (int i = 0; i < inputString.length(); i++) {
             char c = inputString.charAt(i);
             if (scoreboard.get(c) == 1) {
