@@ -2,6 +2,10 @@ package com.saqib.puzzles;
 
 import java.util.Arrays;
 
+/**
+ * Prints the Fibonacci series up to the Nth term ( specified by the number supplied as an argument ).
+ */
+
 public class FibonacciSeries {
 	
 	public static void main(String[] args) {
