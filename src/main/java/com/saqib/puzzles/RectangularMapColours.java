@@ -1,5 +1,7 @@
 package com.saqib.puzzles;
 
+import java.util.Arrays;
+
 /**
  * 
  * Codility coding problem
@@ -22,108 +24,99 @@ package com.saqib.puzzles;
  */
 
 public class RectangularMapColours {
+	int numberOfCountries = 0;
+	int [] testMapFlattened;
+	int [] [] traversedSquares;
+	int rowLength;
+	int currentPosition = 0;
+	int count = 0;
 
 	public static void main(String[] args) {
 
-		// should return 11 (draw a map on paper)
-		// int[][] testMap = new int[][] {{5,4,4}, {4,3,4}, {3,2,4}, {2,2,2}, {3,3,4},
-		// {1,4,4}, {4,1,1}};
-
-		// should return
-		int[][] testMap = new int[][] { { 1, 2, 2 }, { 3, 2, 2 }, { 4, 2, 5 }, { 6, 5, 5 }, { 7, 7, 7 } };
-
-		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap));
-
+		// should return 7
+		int[][] testMap1 = new int[][] { { 1, 2, 2 }, { 3, 2, 2 }, { 4, 2, 5 }, { 6, 5, 5 }, { 7, 7, 7 } };
+		
+		// should return 6
+		int[][] testMap2 = new int[][] { { 1, 2, 2 }, { 3, 2, 2 }, { 4, 2, 5 }, { 5, 5, 5 }, { 7, 7, 7 } };
+		
+		//should return 10
+		int[][] testMap3 = new int[][] { { 1, 2, 2, 2 }, { 3, 2, 5, 2 }, { 6, 6, 7, 2 }, { 5, 6, 3, 1 }, { 7, 7, 7, 7 } };
+		
+		//should return 10
+		int[][] testMap4 = new int[][] { { 1, 2, 5, 2 }, { 3, 2, 2, 2 }, { 6, 6, 7, 2 }, { 5, 6, 3, 1 }, { 7, 7, 7, 7 } };
+		
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap1));
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap2));
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap3));
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap4));
 	}
 
 	public int numberOfCountriesOnMap(int[][] inputArray) {
-		int numberOfCountries = 0;
-		int numOfRows = inputArray.length;
-		int numOfColumns = inputArray[0].length;
-
-		// traverse the array starting from the top left square (0,0) and moving along
-		// column by column and row by row
-		for (int row = 0; row < numOfRows; row++) {
-			Integer currentColour = null;
-			for (int column = 0; column < numOfColumns; column++) {
-				currentColour = inputArray[row][column];
-				boolean isNewCountry = checkIfNewCountry(row, column, currentColour, inputArray);
-				if (isNewCountry)
-					numberOfCountries++;
-			}
+		rowLength = inputArray[0].length;
+		testMapFlattened = Arrays.stream(inputArray).flatMapToInt(Arrays::stream).toArray();
+		traversedSquares = new int [inputArray.length] [rowLength];
+		
+		for (int i=0; i < inputArray.length; i++) { 
+			for (int j=0; j < rowLength; j++) { 
+				traversedSquares [i] [j] = 0; 
+			} 
 		}
-
-		return numberOfCountries;
-	}
-
-	/**
-	 * 
-	 * Determine if we have a new country.
-	 * 
-	 * 
-	 * @param row           - the current row we're on
-	 * @param column        - the current column we're on
-	 * @param currentColour - the colour of the current square
-	 * @param inputArray    - the entire array
-	 * @return a boolean value indicating whether this square is part of a new
-	 *         country or now
-	 */
-	private boolean checkIfNewCountry(int row, int column, Integer currentColour, int[][] inputArray) {
-
-		// very first square so just return true as by default it's a new country
-		if (row == 0 && column == 0) {
-			return true;
-		}
-
-		// we're on the first row
-		if (row == 0) {
-			if (inputArray[row][column - 1] != currentColour) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		// we are at the start of the row so can't test previous column so check the
-		// square directly above
-		// and also the square directly in front as it could possibly provide a link to
-		// a previous square of the same colour
-		// meaning it's not a new country
-		if (column == 0) {
-			if ((inputArray[row - 1][column] != currentColour)) {
-				if (inputArray[row][column + 1] != currentColour) {
-					return true;
-				} else if (inputArray[row - 1][column + 1] != currentColour) {
-					return true;
-				} else {
-					return false;
+		
+		for (int i=0; i < inputArray.length; i++) { 
+			for (int j=0; j < rowLength; j++) { 
+				/*
+				 * if we've already done the walk from this position then no need to do it
+				 * again. Keep advancing until we arrive at a position that hasn't already been traversed
+				 * in a previous walk (i.e. a new country).
+				 * The total number of countries will equal the total number of walks we did,
+				 * as each walk represents an entire country.
+				 * 
+				 */
+				if (traversedSquares [i] [j] == 0) {
+					count++;
+					doWalk(inputArray, i, j); 
 				}
-			}
+			} 
 		}
-
-		// final column in the row so just check square above and square behind
-		if (column == inputArray[0].length - 1) {
-			if ((inputArray[row - 1][column] != currentColour) && (inputArray[row][column - 1] != currentColour))
-				return true;
-		}
-
-		// a square that's not the first or final column. first check square above and
-		// square before to see if they are both different colours.
-		// then check the square ahead. if it's different then we definitely have a new
-		// country. if it's the same then we have to check the square above it.
-		// if the square above it is the same colour then we already noted the start of
-		// this country so the function should return false.
-		if ((inputArray[row - 1][column] != currentColour) && (inputArray[row][column - 1] != currentColour)) {
-			if ((inputArray[row][column + 1] != currentColour)) {
-				return true;
-			} else if (inputArray[row - 1][column + 1] != currentColour) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		return false;
+		
+		return count;
 	}
-
+	
+	private void doWalk(int [] [] inputArray, int row, int column) {
+		
+		/*
+		 * From each position there are potentially four ways we can move. Up, down, left and right.
+		 * However, we need to check for the limits of the map (we can't move off the edges).
+		 * 
+		 */
+		
+		// moving right
+		if (column+1 < rowLength && inputArray[row][column +1] == inputArray[row][column] && traversedSquares[row][column + 1] == 0) {
+			traversedSquares[row][column] = 1;
+			doWalk(inputArray, row, column+1);
+		}
+		
+		// moving left
+		if (column-1 >= 0 && inputArray[row][column-1] == inputArray[row][column] && traversedSquares[row][column - 1] == 0) {
+			traversedSquares[row][column] = 1;
+			doWalk(inputArray, row, column-1);
+		}
+		
+		// moving down
+		if (row-1 >= 0 && inputArray[row-1][column] == inputArray[row][column] && traversedSquares[row-1][column] == 0) {
+			traversedSquares[row][column] = 1;
+			doWalk(inputArray, row-1, column);
+		}
+		
+		// moving up
+		if (row+1 < inputArray.length && inputArray[row+1][column] == inputArray[row][column] && traversedSquares[row+1][column] == 0) {
+			traversedSquares[row][column] = 1;
+			doWalk(inputArray, row+1, column);
+		}
+		
+		// if we can't move anywhere then the walk is finished and we can mark this position as traversed
+		traversedSquares[row][column] = 1;
+		return;
+	}
+	
 }
