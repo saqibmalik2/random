@@ -49,12 +49,12 @@ public class RectangularMapColours {
 		//should return 2
 		int[][] testMap6 = new int[][] { { 1, 1, 1, 1 }, { 1, 7, 7, 1 }, { 1, 7, 7, 1  }, { 1, 7, 7, 1  }, { 1, 1, 1, 1} };
 		
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap1));
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap2));
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap3));
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap4));
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap5));
-		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap6));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap1));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap2));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap3));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap4));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap5));
+		System.out.println(new RectangularMapColours().numberOfCountriesOnMap(testMap6));
 		
 	}
 	
