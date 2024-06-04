@@ -111,7 +111,8 @@ public class RectangularMapColours {
 		/*
 		 * From each position there are potentially four ways we can move. Up, down, left and right.
 		 * However, we need to check for the limits of the map (we can't move off the edges).
-		 * 
+		 * If the the next square in the relevant direction has the same colour and hasn't already been traversed
+		 * then we move to it.
 		 */
 		
 		// moving right
