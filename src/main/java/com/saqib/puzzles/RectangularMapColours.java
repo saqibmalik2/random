@@ -24,11 +24,9 @@ import java.util.Arrays;
  */
 
 public class RectangularMapColours {
-	int numberOfCountries = 0;
-	int [] testMapFlattened;
+	
 	int [] [] traversedSquares;
 	int rowLength;
-	int currentPosition = 0;
 	int count = 0;
 
 	public static void main(String[] args) {
@@ -45,23 +43,49 @@ public class RectangularMapColours {
 		//should return 10
 		int[][] testMap4 = new int[][] { { 1, 2, 5, 2 }, { 3, 2, 2, 2 }, { 6, 6, 7, 2 }, { 5, 6, 3, 1 }, { 7, 7, 7, 7 } };
 		
+		//should return 3
+		int[][] testMap5 = new int[][] { { 1, 1, 1, 7 }, { 1, 7, 7, 1 }, { 1, 7, 7, 1  }, { 1, 7, 7, 1  }, { 1, 1, 1, 1} };
+		
+		//should return 2
+		int[][] testMap6 = new int[][] { { 1, 1, 1, 1 }, { 1, 7, 7, 1 }, { 1, 7, 7, 1  }, { 1, 7, 7, 1  }, { 1, 1, 1, 1} };
+		
 		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap1));
 		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap2));
 		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap3));
 		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap4));
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap5));
+		System.out.println(new RectangularMapColoursAlternative().numberOfCountriesOnMap(testMap6));
+		
 	}
-
+	
+	/**
+	 * 
+	 * The solution works by performing a recursive 'walk' from each position. If a position has already been
+	 * processed as part of a country then it is skipped over. The total number of countries will be equal to 
+	 * the total number of walks performed. The best way to understand this solution would be to do a dry run using
+	 * the example input maps in the main method.
+	 * 
+	 * @param inputArray - the provided map
+	 * @return count - the number of distinct countries on this map
+	 */
 	public int numberOfCountriesOnMap(int[][] inputArray) {
 		rowLength = inputArray[0].length;
-		testMapFlattened = Arrays.stream(inputArray).flatMapToInt(Arrays::stream).toArray();
 		traversedSquares = new int [inputArray.length] [rowLength];
 		
+		/*
+		 * create a matrix of the same dimensions as the original input matrix and fill
+		 * it with 0s. As we 'walk' from each position, every position we walk to we cross off
+		 * by setting it to 1.
+		 * 
+		 */
+	
 		for (int i=0; i < inputArray.length; i++) { 
 			for (int j=0; j < rowLength; j++) { 
 				traversedSquares [i] [j] = 0; 
 			} 
 		}
 		
+		// traverse the matrix, starting from position [0][0]
 		for (int i=0; i < inputArray.length; i++) { 
 			for (int j=0; j < rowLength; j++) { 
 				/*
