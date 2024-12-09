@@ -48,7 +48,6 @@ public class CommentSanitiser {
 	}
 	
 	public String sanitiseComment(String comment) {
-		String[] words = comment.split("(\s+)|,");
 		
 		for (String forbiddenWord:dictionary) {
 			String replacement = asterix.repeat(forbiddenWord.length());
