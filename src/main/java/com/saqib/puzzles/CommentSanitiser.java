@@ -25,12 +25,9 @@ import java.util.regex.Pattern;
 public class CommentSanitiser {
 	
 	private List<String> dictionary = new ArrayList<>();
-	
-	private Pattern validEmailRegEx = 
-		    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-	
-	private Pattern validPhoneNumberRegEx = Pattern.compile("^\\([0-9]+\\)|[0-9]+");
-	
+	private Pattern validEmailRegEx = Pattern.compile("([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)");
+	private Pattern validPhoneNumberRegEx = Pattern.compile("\\([0-9]+\\)|[0-9]+");
+	private String asterix = "*";
 	private String emailAddress = "<email address>";
 	private String phoneNumber = "<phone number>";
 	
@@ -47,48 +44,39 @@ public class CommentSanitiser {
 
 	public static void main(String[] args) {
 		CommentSanitiser commentSanitiser = new CommentSanitiser();
-		System.out.println(commentSanitiser.sanitiseComment("James was a crap builder...and generally a cretin. Send him your complaints on james@jollycleverbuilders.com,boyo@jollycleverbuilders.com or (07965123456)"));
+		System.out.println(commentSanitiser.sanitiseComment("James was a crap builder...and generally a cretin. Send him your complaints on james@jollycleverbuilders.com,boyo@jollycleverbuilders.com or (07965123456),07445598796"));
 	}
 	
 	public String sanitiseComment(String comment) {
 		String[] words = comment.split("(\s+)|,");
-		String asterix = "*";
 		
-		for (int i=0;i<words.length;i++) {
-			String currentWord = words[i].replaceAll("\\p{Punct}", "").toLowerCase();
-			if (dictionary.contains(currentWord)) {
-				String replacement;
-				if (words[i].matches(".*\\p{Punct}")) {
-					//there might be more than one punctuation mark after the word
-					// e.g. "James was a crap builder and generally a cretin.."
-					// in this case word[i] will be "cretin.." but we only need 6 asterixes 
-					// for the replacement not 7 or 8 i.e. don't create asterixes for punctuation marks
-					replacement = asterix.repeat(words[i].length() - (words[i].length() - currentWord.length()));
-				}
-				else {
-					replacement = asterix.repeat(words[i].length());
-				}
-				comment = comment.replaceFirst(currentWord, replacement);
-			}
-			if (validateEmail(words[i])) {
-				comment = comment.replaceFirst(words[i], emailAddress);
-			}
-			if (validatePhoneNumber(words[i])) {
-				comment = comment.replaceFirst("[0-9]+", phoneNumber);
-			}
+		for (String forbiddenWord:dictionary) {
+			String replacement = asterix.repeat(forbiddenWord.length());
+			comment = comment.replaceAll(forbiddenWord, replacement);
+			
 		}
 		
+		List<String> emailMatches = new ArrayList<String>();
+		Matcher emailMatcher = validEmailRegEx.matcher(comment);
+        while(emailMatcher.find()) {
+        	emailMatches.add(emailMatcher.group(0));
+        }
+        
+    	List<String> phoneNumberMatches = new ArrayList<String>();
+    	Matcher phoneNumberMatcher = validPhoneNumberRegEx.matcher(comment);
+        while(phoneNumberMatcher.find()) {
+        	phoneNumberMatches.add(phoneNumberMatcher.group(0));
+        }
+		
+        for (String email:emailMatches) {
+        	comment = comment.replaceAll(email, emailAddress);
+        }
+        
+        for (String email:phoneNumberMatches) {
+        	comment = comment.replaceAll(email, phoneNumber);
+        }
+		
 		return comment;
-	}
-
-	private boolean validateEmail(String emailStr) {
-        Matcher matcher = validEmailRegEx.matcher(emailStr);
-        return matcher.matches();
-	}
-	
-	private boolean validatePhoneNumber(String phoneNumber) {
-        Matcher matcher = validPhoneNumberRegEx.matcher(phoneNumber);
-        return matcher.matches();
 	}
 
 
