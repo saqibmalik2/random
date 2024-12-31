@@ -29,7 +29,7 @@ public class CommentSanitiser {
 	private Pattern validPhoneNumberRegEx = Pattern.compile("\\([0-9]+\\)|[0-9]+");
 	private String asterix = "*";
 	private String emailAddress = "<email address>";
-	private String phoneNumber = "<phone number>";
+	private String phoneNumberReplacement = "<phone number>";
 	
 	public CommentSanitiser() {
 		initialiseDictionary();
@@ -71,8 +71,8 @@ public class CommentSanitiser {
         	comment = comment.replaceAll(email, emailAddress);
         }
         
-        for (String email:phoneNumberMatches) {
-        	comment = comment.replaceAll(email, phoneNumber);
+        for (String phoneNumber:phoneNumberMatches) {
+        	comment = comment.replaceAll(phoneNumber, phoneNumberReplacement);
         }
 		
 		return comment;
