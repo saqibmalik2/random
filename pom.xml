@@ -15,6 +15,7 @@
     <org.springframework.version>5.2.22.RELEASE</org.springframework.version>
     <junit.jupiter.version>5.8.1</junit.jupiter.version>
     <junit.platform.version>1.8.1</junit.platform.version>
+    <java.version>17</java.version>
   </properties>
 
   <dependencies>
@@ -89,8 +90,6 @@
 	    <artifactId>spring-context</artifactId>
 	    <version>${org.springframework.version}</version>
 	</dependency>
-	
-
 	
   </dependencies>
 </project>
