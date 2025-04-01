@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.saqib</groupId>
-  <artifactId>fx-engine</artifactId>
+  <artifactId>imager</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>fx-engine</name>
+  <name>imager</name>
   <url>http://maven.apache.org</url>
 
   <properties>
