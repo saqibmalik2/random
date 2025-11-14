@@ -30,21 +30,50 @@ import java.util.Arrays;
 public class RotateArray {
 
 	public static void main(String[] args) {
-		int[] A = {3,8,9,7,6};
-		int K = 18;
+		int[] A = {1,2,3,4,5,6,7};
+		int K = 3;
 		RotateArray rotateArray = new RotateArray();
-		System.out.println(Arrays.toString(rotateArray.rotateArray(A, K)));
+		rotateArray.rotateArray(A, K);
 	}
 	
-	public int[] rotateArray(int[] A, int K) {
-		int length = A.length;
+	private void rotateArray(int[] nums, int k) {
+	    int length = nums.length;
 		int[] rotatedArray = new int[length];
 
 		for (int i=0;i<length;i++) {
-			int position = i + K > (length - 1) ? (i + K) % length : i + K;
-			rotatedArray[position] = A[i];
+			int position = i + k > (length - 1) ? (i + k) % length : i + k;
+			rotatedArray[position] = nums[i];
 		}
-		return rotatedArray;
+		System.arraycopy(rotatedArray, 0, nums, 0, length);
+		System.out.println(Arrays.toString(nums));
 	}
+	
+	/**
+	 * A more efficient solution: 
+	 * 
+	 * 		(i) first calculate the effective number of places to rotate by, k. Obtained from the modulo after
+	 * 			division by the length of the array.
+	 * 		(ii) reverse the entire array
+	 * 		(iii) reverse the first portion of the array up to the point k
+	 * 		(iv) reverse the second portion of the array starting at k up to the end
+	 */
+	
+	public void rotate(int[] nums, int k) {
+        k %= nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+	
 
 }

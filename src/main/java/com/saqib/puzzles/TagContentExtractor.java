@@ -59,32 +59,36 @@ import java.util.regex.Pattern;
  */
 	
 public class TagContentExtractor {
-
 	public static void main(String[] args) {
-
 		Scanner in = new Scanner(System.in);
 		int testCases = Integer.parseInt(in.nextLine());
-
 		while (testCases > 0) {
 			String line = in.nextLine();
-			String regex = "<(.+)>([^<>]+)(</\\1>)";
+			
+			// Regex breakdown:
+			// <([^<>]+?)>  - Opening tag: captures tag name (group 1), using reluctant quantifier (+?)
+			//                [^<>] ensures tag name doesn't contain angle brackets
+			// ([^<>]+)     - Content: captures text between tags (group 2)
+			//                [^<>]+ prevents matching nested tags (no angle brackets allowed)
+			// </\1>        - Closing tag: must match the opening tag name using backreference \1
+			String regex = "<([^<>]+?)>([^<>]+)</\\1>";
+			
 			Pattern p = Pattern.compile(regex);
 			Matcher m = p.matcher(line);
 			boolean textFound = false;
-
+			
+			// Find all matching tag pairs in the line
 			while (m.find()) {
-				if (m.group(2).length() != 0) {
-					System.out.println(m.group(2));
-					textFound = true;
-				}
+				// Group 2 contains the content between the matching tags
+				System.out.println(m.group(2));
+				textFound = true;
 			}
-
+			
+			// If no valid tags found, print "None"
 			if (!textFound)
 				System.out.println("None");
-
 			testCases--;
 		}
 		in.close();
 	}
-
 }

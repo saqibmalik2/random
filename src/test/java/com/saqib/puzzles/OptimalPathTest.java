@@ -51,5 +51,14 @@ public class OptimalPathTest {
 				 };
 		assertEquals(200,optimalPath.calculateOptimalPath(intialGrid));
 	}
+	
+	@Test
+	public void testOptimalPathExpectSix() {
+		int[][] intialGrid = { {3}, 
+				   {2},
+				   {1}
+				 };
+		assertEquals(6,optimalPath.calculateOptimalPath(intialGrid));
+	}
 
 }

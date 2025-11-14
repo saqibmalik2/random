@@ -2,10 +2,7 @@ package com.saqib.puzzles;
 
 import static java.lang.System.*;
 
-import java.util.Arrays;
-
 import org.springframework.stereotype.Component;
-
 
 /**
  * You are an avid rock collector who lives in southern California. Some rare and desirable rocks just became
@@ -23,75 +20,97 @@ import org.springframework.stereotype.Component;
  * { {0,0,0,0,5}, (New York)
  *   {0,1,1,1,0},
  *   {2,0,0,0,0}  (So_Cal)
- *   }
+ * }
  *   
- * So total for the optimal path here would be: 2 + 1 + 1 + 1 + 5 = 10
+ * Total for the optimal path: 2 + 1 + 1 + 1 + 5 = 10
  * 
- *
+ * Time Complexity: O(m * n) where m = rows, n = columns
+ * Space Complexity: O(m * n) for memoization table + O(m + n) for recursion stack
  */
-
 @Component
 public class OptimalPath {
-	
-	int total = 0;
-	
-	
-	public static void main(String...args) {
-		int[][] intialGrid = { {0,0,0,0,5}, 
-				   			   {0,1,1,1,0},
-				   			   {2,0,0,0,0}
-				 			 };
-		out.println(new OptimalPath().calculateOptimalPath(intialGrid));
-	}
-	
-	/**
-	 * @param A two dimensional integer array. This is a grid representing the all the cities, and positions at which rocks 
-	 * 		  are located along with the number of rocks at each point.
-	 * 
-	 * @return An int givng the total number of rocks that can be collected along the optimal path as per the rules specified above.
-	 */
-	public int calculateOptimalPath(int[][] grid) {
-			if (grid == null || grid.length == 0) throw new IllegalArgumentException("grid cannot be empty");
-			
-			//the starting total is the value of the first position (bottom left)
-			total = grid[grid.length - 1][0];
-			
-			//if we have only entry in the matrix then its value is the total. this represents the base case for the recursion.
-			if (grid.length == 1 && grid[0].length == 1) {
-				return total;
-			}
-			
-			//if we only have one array then we can't move up and so the total will be the total of this array
-			if (grid.length == 1) {
-				int[] newIntArray;
-				newIntArray = Arrays.copyOfRange(grid[0], 1, grid[0].length);
-				int [][] newGrid = {newIntArray};
-				return total += calculateOptimalPath(newGrid);
-			}
-			
-			//if the length of the top row is one (and as all arrays are the same length) then we can total up the one value in each of the arrays 
-			if (grid[0].length == 1) {
-				int [][] newGrid = new int[1][1];
-				newGrid[0][0] = grid[0][0];
-				return total += calculateOptimalPath(newGrid);
-			}
-			//we have two choices: move up or move along
-			else {
-				//the up path choice involves creating a new grid with the left most corner being the position directly above the current position
-				int[][] upPathGrid = new int[grid.length - 1][];
-				for (int i = grid.length - 2; i >= 0; i--) {
-					upPathGrid[i] = Arrays.copyOfRange(grid[i], 0, grid[0].length);
-				}
-				//the along path choice involves creating a new grid with the left most corner being the position directly to the right of the current position
-				int [][] alongPathGrid = new int[grid.length][grid[0].length - 1];
-				for (int i = grid.length -1; i >= 0; i--) {
-					alongPathGrid[i] = Arrays.copyOfRange(grid[i], 1, grid[0].length);
-				}
-				// apply recursion: add the current total to the maximum value of either the up or along paths. this line is where the "magic" resides
-				// and to understand it properly I recommend watching a YouTube video on "back tracking" algorithms.
-				return total += Math.max(calculateOptimalPath(upPathGrid), calculateOptimalPath(alongPathGrid));
-			}
-	}
+    
+    public static void main(String... args) {
+        int[][] initialGrid1 = { 
+            {0, 0, 0, 0, 5}, 
+            {0, 1, 1, 1, 0},
+            {2, 0, 0, 0, 0}
+        };
+        
+        int[][] initialGrid2 = {
+            {  1, 100,   1, 1},
+            {  1,   1, 100, 1},
+            {100,   1,   1, 1}
+        };
+        
+        OptimalPath solution = new OptimalPath();
+        out.println("Grid 1: " + solution.calculateOptimalPath(initialGrid1)); // Expected: 10
+        out.println("Grid 2: " + solution.calculateOptimalPath(initialGrid2)); // Expected: 204
+    }
+    
+    /**
+     * Calculates the maximum number of rocks that can be collected on the optimal path
+     * from bottom-left (So_Cal) to top-right (New_York).
+     * 
+     * Uses top-down dynamic programming (recursion with memoization).
+     * 
+     * @param grid A 2D integer array representing cities and rock counts
+     * @return The maximum number of rocks collectible on the optimal path
+     * @throws IllegalArgumentException if grid is null or empty
+     */
+    public int calculateOptimalPath(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            throw new IllegalArgumentException("Grid cannot be null or empty");
+        }
+        
+        // Create memoization cache to store computed subproblems
+        // memo[row][col] = max rocks from position (row, col) to destination
+        Integer[][] memo = new Integer[grid.length][grid[0].length];
+        
+        // Start from bottom-left corner (So_Cal)
+        return maxFrom(grid, grid.length - 1, 0, memo);
+    }
+    
+    /**
+     * Recursive helper with memoization.
+     * 
+     * Computes the maximum rocks collectible from position (row, col) to the destination.
+     * 
+     * @param grid The original grid
+     * @param row Current row position
+     * @param col Current column position
+     * @param memo Memoization cache
+     * @return Maximum rocks from this position to destination
+     */
+    private int maxFrom(int[][] grid, int row, int col, Integer[][] memo) {
+        // Destination
+        if (row == 0 && col == grid[0].length - 1) {
+            return grid[row][col];
+        }
 
+        // Memo hit
+        if (memo[row][col] != null) {
+            return memo[row][col];
+        }
+
+        final int rowLength = grid[0].length - 1;
+
+        int best;
+        if (row == 0) {
+            // Top row (can't go up): must go right
+            best = grid[row][col] + maxFrom(grid, row, col + 1, memo);
+        } else if (col == rowLength) {
+            // Rightmost column (can't go right): must go up
+            best = grid[row][col] + maxFrom(grid, row - 1, col, memo);
+        } else {
+            // Interior: choose the better of up/right
+            int up = maxFrom(grid, row - 1, col, memo);
+            int right = maxFrom(grid, row, col + 1, memo);
+            best = grid[row][col] + Math.max(up, right);
+        }
+
+        memo[row][col] = best;
+        return best;
+    }
+    
 }
-

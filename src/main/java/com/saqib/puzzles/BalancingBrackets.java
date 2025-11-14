@@ -27,32 +27,36 @@ public class BalancingBrackets {
 	
 	public boolean isValid(String input) {
 		
-		//number of characters can't be odd
-		if (input.length() % 2 != 0) return false;
-		
-		Stack<Character> inputStack = new Stack<>();
-		HashMap<Character, Character> characterPairs = new HashMap<>();
-		characterPairs.put(')', '(');
-		characterPairs.put(']', '[');
-		characterPairs.put('}', '{');
-		
-		for (Character c: input.toCharArray()) {
-			//if we encounter an open bracket add it to the stack
-			if (c.equals('{') || c.equals('[') || c.equals('(')) {
-				inputStack.add(c);
-			}
-			// if a closing bracket then don't add but check what previous character was
-			else {
-				//we've popped all previous open brackets off so we shouldn't be encountering a closing bracket
-				if (inputStack.isEmpty()) return false;
-				// is the top of the stack the corresponding opening bracket?
-				if (!characterPairs.get(c).equals(inputStack.pop())) {
-					return false;
-				}
-			}
-		}
-		// if this returns true then all the brackets matched up correctly
-		return inputStack.isEmpty();
+	    // Optimization: odd length can never be balanced
+	    if (input.length() % 2 != 0) return false;
+
+	    Stack<Character> inputStack = new Stack<>();
+	    
+	    // Map closing brackets to their corresponding opening brackets
+	    HashMap<Character, Character> characterPairs = new HashMap<>();
+	    characterPairs.put(')', '(');
+	    characterPairs.put(']', '[');
+	    characterPairs.put('}', '{');
+
+	    for (char c : input.toCharArray()) {
+	        // If opening bracket, push to stack
+	        if (c == '{' || c == '[' || c == '(') {
+	            inputStack.push(c);
+	        }
+	        // If closing bracket, check if it matches the most recent opening bracket
+	        else {
+	            // No opening bracket to match with
+	            if (inputStack.isEmpty()) return false;
+	            
+	            // Check if top of stack matches the expected opening bracket
+	            if (characterPairs.get(c) != inputStack.pop()) {
+	                return false;
+	            }
+	        }
+	    }
+	    
+	    // All brackets matched if stack is empty
+	    return inputStack.isEmpty();
 	}
 	
 }
