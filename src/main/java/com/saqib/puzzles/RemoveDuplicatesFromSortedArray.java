@@ -1,6 +1,8 @@
 package com.saqib.puzzles;
 
-/*Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+/*Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place 
+*  such that each unique element appears only once. The relative order of the elements should be kept the same. 
+*  Then return the number of unique elements in nums.
 
 Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
 
@@ -40,7 +42,7 @@ public class RemoveDuplicatesFromSortedArray {
 	
 	
 	/**
-	 * 
+	 * Naive solution: potentially O(n^2)
 	 * Two positions: currentPosition (self-explanatory) and nextUniquePosition (the position in the array containing...
 	 * ...the next distinct number in the array).
 	 * We start from currentPosition = 0 and proceed through the array. 
@@ -80,12 +82,37 @@ public class RemoveDuplicatesFromSortedArray {
 		return k;
 	}
 	
+	/*
+	 * optimised two pointer solution O(n) the base pointer marks the index of the
+	 * final unique number in the array we move through the array with current and
+	 * every time we encounter number which doesn't match the one at the location
+	 * pointed to by base (i.e we've encountered a new number) we advance base by
+	 * one and store the number at current there. When current reaches the end of
+	 * the array then base will point to the position in the edited array up to
+	 * which it is unique (and still in ascending order)
+	 */
+	public int removeDuplicatesOptimised(int[] nums) {
+		if (nums.length == 0) return 0;
+		//the index of the last unique number in the array
+		int base=0;
+		int current=0;
+		
+		while (current<nums.length) {
+			if (nums[current] != nums[base]) {
+				nums[++base] = nums[current];
+			}
+			current++;
+		}
+		//add 1 before returning because arrays are zero indexed
+		return ++base;
+	}
+	
 
 	public static void main(String[] args) {
-		//int[] nums = {0,0,1,1,1,2,2,3,3,4};
-		int[] nums = {0,1,2,3,4};
+		int[] nums = {0,0,1,1,1,2,2,3,3,4};
+		//int[] nums = {0,1,2,3,4};
 		RemoveDuplicatesFromSortedArray rdfsa = new RemoveDuplicatesFromSortedArray();
-		System.out.println(rdfsa.removeDuplicates(nums));
+		System.out.println(rdfsa.removeDuplicatesOptimised(nums));
 	}
 
 }
