@@ -61,7 +61,31 @@ public class FlatMapMapMultiExercises1to3 {
     }
 
     public static void main(String[] args) {
+    	
+    	List<Integer> input = List.of(0, 1, 2, 3);
+    	
+    	/**
+    	 * Using mapMulti, produce a List<Integer> where, for each n:
 
+				0 produces no values,
+				
+				1 produces 1,
+				
+				2 produces 1, 2,
+				
+				3 produces 1, 2, 3.
+    	 */
+    	
+    	List<Integer> listOfIntegers = input.stream()
+        .<Integer>mapMulti((n, sink) -> {
+            for (int i = 1; i <= n; i++) {
+                sink.accept(i);
+            }
+        })
+        .toList();
+    	
+    	System.out.println(listOfIntegers);
+    	
         // Exercise 1 demo
         List<List<String>> ex1Input = List.of(
                 List.of("alpha", "beta"),
