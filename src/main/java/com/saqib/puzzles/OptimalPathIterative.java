@@ -108,8 +108,9 @@ public class OptimalPathIterative {
 
         // Process each row from second-to-last up to the top
         for (int i = noOfRows - 2; i >= 0; i--) {
-            // Update leftmost column: can only come from below
-            // Add current row's value to the existing dp[0] (which holds value from row below)
+            // Update leftmost column: can only arrive from below
+        	// dp[0] currently holds the cumulative sum from start to row i+1
+        	// Add current cell's rocks to extend the path to row i
             dp[0] += grid[i][0];
             
             // Process remaining columns left to right
