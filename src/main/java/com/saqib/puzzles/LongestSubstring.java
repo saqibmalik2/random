@@ -5,33 +5,34 @@ import java.util.HashMap;
 /**
  * Longest Substring Without Repeating Characters
  * 
- * Problem:
- * Given a string s, find the length of the longest substring without repeating characters.
+ * <p>Given a string s, find the length of the longest substring without repeating characters.
  * 
- * Examples:
- * Input: "abcabcbb" → Output: 3 (substring "abc")
- * Input: "bbbbb" → Output: 1 (substring "b")
- * Input: "pwwkew" → Output: 3 (substring "wke")
- * Input: "dvdf" → Output: 3 (substring "vdf")
+ * <h2>Examples:</h2>
+ * <ul>
+ *   <li>Input: "abcabcbb" → Output: 3 (substring "abc")</li>
+ *   <li>Input: "bbbbb" → Output: 1 (substring "b")</li>
+ *   <li>Input: "pwwkew" → Output: 3 (substring "wke")</li>
+ *   <li>Input: "dvdf" → Output: 3 (substring "vdf")</li>
+ * </ul>
  * 
- * Solution Approach - Sliding Window with HashMap:
+ * <h2>Solution Approach - Sliding Window with HashMap:</h2>
  * 
- * We use a sliding window technique with two pointers (left and right) to track the current
+ * <p>We use a sliding window technique with two pointers (left and right) to track the current
  * substring being evaluated. The right pointer (i) expands the window by iterating through
  * the string, while the left pointer contracts the window when we encounter duplicate characters.
  * 
- * A HashMap tracks each character's most recent position. When we encounter a character that's
+ * <p>A HashMap tracks each character's most recent position. When we encounter a character that's
  * already in our current window (i.e., its stored position is >= leftPointer), we move the
  * left pointer to one position after the previous occurrence of that character.
  * 
- * Key insight: leftPointer only moves forward, never backward. This handles cases like "abba"
- * where we might encounter an old duplicate that's no longer in our current window.
+ * <p><strong>Key insight:</strong> leftPointer only moves forward, never backward. This handles 
+ * cases like "abba" where we might encounter an old duplicate that's no longer in our current window.
  * 
- * Time Complexity: O(n) where n is the length of the string - we visit each character once
- * Space Complexity: O(min(n, m)) where m is the charset size (typically 128 for ASCII)
+ * <p><strong>Time Complexity:</strong> O(n) where n is the length of the string - we visit each character once<br>
+ * <strong>Space Complexity:</strong> O(min(n, m)) where m is the charset size (typically 128 for ASCII)
  * 
- * Dry Run Example 1: "abcabcbb"
- * 
+ * <h2>Dry Run Example 1: "abcabcbb"</h2>
+ * <pre>
  * i=0, char='a': positions={a:0}, leftPointer=0, window="a", length=1, max=1
  * i=1, char='b': positions={a:0,b:1}, leftPointer=0, window="ab", length=2, max=2
  * i=2, char='c': positions={a:0,b:1,c:2}, leftPointer=0, window="abc", length=3, max=3
@@ -52,9 +53,10 @@ import java.util.HashMap;
  *                positions={a:3,b:7,c:5}, leftPointer=7, window="b", length=1, max=3
  * 
  * Final result: 3
+ * </pre>
  * 
- * Dry Run Example 2: "dvdf"
- * 
+ * <h2>Dry Run Example 2: "dvdf"</h2>
+ * <pre>
  * i=0, char='d': positions={d:0}, leftPointer=0, window="d", length=1, max=1
  * i=1, char='v': positions={d:0,v:1}, leftPointer=0, window="dv", length=2, max=2
  * i=2, char='d': duplicate found! positions has 'd' at index 0
@@ -63,9 +65,10 @@ import java.util.HashMap;
  * i=3, char='f': positions={d:2,v:1,f:3}, leftPointer=1, window="vdf", length=3, max=3
  * 
  * Final result: 3
+ * </pre>
  * 
- * Why Math.max for leftPointer?
- * Consider "abba": when we hit the second 'a' at index 3, the first 'a' is at index 0.
+ * <h2>Why Math.max for leftPointer?</h2>
+ * <p>Consider "abba": when we hit the second 'a' at index 3, the first 'a' is at index 0.
  * But our leftPointer is already at 2 (moved there when we found the duplicate 'b').
  * We shouldn't move leftPointer backward to 1, so we use Math.max(leftPointer, 0+1) = max(2,1) = 2
  */
